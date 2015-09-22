@@ -18,9 +18,9 @@ namespace Assignment2
             Airline air = new Airline(); // create an airline to pass the airline function for threading
             
             // Instantiate 3 airline threads and then start them
-            Thread airline1 = new Thread(new ThreadStart(air.priceModel));
-            Thread airline2 = new Thread(new ThreadStart(air.airlineFunc));
-            Thread airline3 = new Thread(new ThreadStart(air.airlineFunc));
+            Thread airline1 = new Thread(new ThreadStart(() => air.priceModel("airline1"))); // start the thread with the passed-in parameter airline1 string
+            Thread airline2 = new Thread(new ThreadStart(() => air.priceModel("airline2"))); // start the thread with the passed-in parameter airline2 string
+            Thread airline3 = new Thread(new ThreadStart(() => air.priceModel("airline3"))); // start the thread with the passed-in parameter airline3 string
             airline1.Name = "airline 1";
             airline2.Name = "airline 2";
             airline3.Name = "airline 3";

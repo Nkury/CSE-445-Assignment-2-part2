@@ -8,7 +8,7 @@ namespace Assignment2
 {
     public class OrderProcessing
     {
-        public void orderFunc(string airlineName, OrderObject order)
+        public void orderFunc(OrderObject order)
         {
             //start thread
             //check if card is valid
@@ -18,7 +18,7 @@ namespace Assignment2
             if (cardNo >= 5000 && cardNo <= 7000)
             {
                 //card is valid, process order
-                double orderTotal = order.getUnitPrice() * order.getAmount() * .081; //( tax + locationCharge??)  
+                double orderTotal = order.getUnitPrice() * order.getAmount() * .081; //(unit price * amount of tickets * sales tax)  
 
                 //order confirmation
                 OrderProcessing.confirm(order);
