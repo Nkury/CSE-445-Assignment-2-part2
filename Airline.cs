@@ -17,6 +17,7 @@ namespace Assignment2
            public static event priceCutEvent priceCut;
            private static Int32 ticketPrice = 900;
            private static Int32 numPriceCuts = 0;
+           private static int counter = 0; // counts how many price cut events occurs
            private OrderProcessing op();
            public Int32 getPrice() 
            {
@@ -31,14 +32,17 @@ namespace Assignment2
                 if (price < ticketPrice) //a price cut
                 { //a price cut
                     numPriceCuts++;
-                    if (priceCut != null)   //there is at least a subscriber
+                    if (priceCut != null) {  //there is at least a subscriber
                         priceCut(price);
+                        counter = counter+1;
+                    }
+
                 }
                 ticketPrice = price;
             }
            public void priceModel(string name)
             {
-                for (Int32 i = 0; i < 20; i++)
+                while(counter < 20)
                 {
                     Thread.Sleep(500);
                     //Take the order from the queue of the orders;
