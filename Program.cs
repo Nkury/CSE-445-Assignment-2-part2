@@ -14,7 +14,7 @@ namespace Assignment2
          public static MultiCellBuffer bufferRef = new MultiCellBuffer(); // instantiate buffer that will hold the orders of travel agencies
         static void Main(string[] args)
         {
-            
+            // change
             Airline air = new Airline(); // create an airline to pass the airline function for threading
             
             // Instantiate 3 airline threads and then start them
