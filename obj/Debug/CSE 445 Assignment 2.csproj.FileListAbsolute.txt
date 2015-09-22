@@ -1,1 +1,6 @@
 c:\users\pc\documents\visual studio 2013\Projects\CSE 445 Assignment 2\CSE 445 Assignment 2\bin\Debug\CSE 445 Assignment 2.exe.config
+C:\Users\PC\Documents\Visual Studio 2013\Projects\CSE 445 Assignment 2\CSE 445 Assignment 2\obj\Debug\CSE 445 Assignment 2.csprojResolveAssemblyReference.cache
+C:\Users\PC\Documents\Visual Studio 2013\Projects\CSE 445 Assignment 2\CSE 445 Assignment 2\bin\Debug\CSE 445 Assignment 2.exe
+C:\Users\PC\Documents\Visual Studio 2013\Projects\CSE 445 Assignment 2\CSE 445 Assignment 2\bin\Debug\CSE 445 Assignment 2.pdb
+C:\Users\PC\Documents\Visual Studio 2013\Projects\CSE 445 Assignment 2\CSE 445 Assignment 2\obj\Debug\CSE 445 Assignment 2.exe
+C:\Users\PC\Documents\Visual Studio 2013\Projects\CSE 445 Assignment 2\CSE 445 Assignment 2\obj\Debug\CSE 445 Assignment 2.pdb

@@ -19,30 +19,8 @@ namespace Assignment2
             {
                 //card is valid, process order
                 double orderTotal = order.getUnitPrice() * order.getAmount() * .081; //(unit price * amount of tickets * sales tax)  
-
-                //order confirmation
-                OrderProcessing.confirm(order);
+                Program.confirm.setCell(order.getSenderID(), orderTotal);   // place the confirmation in the confirmation buffer   
             }
-        }
-        public bool confirm(OrderObject order) //set default to false?
-        {
-            Int32 a = order.getAmount();
-            Int32 p = order.getUnitPrice();
-            Int32 c = order.getCardNo();
-            Console.WriteLine("Order confirmed for {0} tickets at ${1} each, purchased with card # {2}", a, p, c);
-            return true;
-
-
-            /*
-             * class confirmation{
-             *  string travelName;
-             *  bool confirm;
-             *  }
-             *  
-             * Array<List> confirmation;
-             * 
-             * confirmation.add(new confirmation(senderID, confirm))
-             */
         }
     }
 }

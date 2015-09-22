@@ -24,7 +24,7 @@ namespace Assignment2
             for (Int32 i = 0; i < 10; i++) // loops 10 times to periodically check if there is a price cut
             {
                 Thread.Sleep(500);
-                Int32 p = air.getPrice();   // calls method of airline to find its price
+                double p = air.getPrice();   // calls method of airline to find its price
                 Console.WriteLine("Airline{0} has everyday low price: ${1} each", Thread.CurrentThread.Name, p); // Thread.CurrentThread.Name 
                                                                                                                // prints the thread name
             }
@@ -49,7 +49,13 @@ namespace Assignment2
             int sec = DateTime.Now.Second;
             Program.bufferRef.setOneCell(encryptedObject);
             // CONFIRMATION USING BUFFER 
-            Console.WriteLine("Order finished processing at: " + month + "/" + day + "/" + year + " @ "
+            double orderTotal = 0;  // initializes it to zero in order to go through a loop and keep checking the confirmation buffer
+            while (orderTotal == 0)
+            {
+                Thread.Sleep(1000);
+                orderTotal = Program.confirm.getCell(Thread.CurrentThread.Name);
+            }
+            Console.WriteLine("Order processed for $" + orderTotal + ". Order finished processing at: " + month + "/" + day + "/" + year + " @ "
               + hour + ":" + min + ":" + sec + " and took " + (DateTime.Now.Second - sec) + " seconds"); // print out the timestamp the order was finished processing
 
          }

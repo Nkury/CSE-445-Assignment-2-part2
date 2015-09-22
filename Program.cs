@@ -12,6 +12,7 @@ namespace Assignment2
          public static AutoResetEvent orderCompleted = new AutoResetEvent(false); // when the airline is done processing the order, this event
                                                                           // coordinates with the travel agency so it can print the timestamp
          public static MultiCellBuffer bufferRef = new MultiCellBuffer(); // instantiate buffer that will hold the orders of travel agencies
+         public static confirmBuffer confirm = new confirmBuffer();
         static void Main(string[] args)
         {
             // change
