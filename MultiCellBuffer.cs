@@ -23,18 +23,18 @@ namespace Assignment2
         {
             // IF THERE IS AN ERROR, THEN IT HAS TO TO WITH THIS
 
-           semaphore.WaitOne(); // acquire one resource
-           lock (buffer)
+            semaphore.WaitOne(); // acquire one resource
+            lock (buffer)
+            {
+                for (int i = 0; i < 3; i++)
                 {
-                    for (int i = 0; i < 3; i++)
+                    if (buffer[i] == "")
                     {
-                        if (buffer[i] == "")
-                        {
-                            buffer[i] = order;
-                            i = 4;
-                        }
+                        buffer[i] = order;
+                        i = 4;
                     }
                 }
+            }
         }
 
         public string getOneCell()
@@ -57,13 +57,16 @@ namespace Assignment2
 
         public void eraseCell(string order)
         {
-             for (int i = 0; i < 3; i++){
-                 if(buffer[i] == order){
+            for (int i = 0; i < 3; i++)
+            {
+                if (buffer[i] == order)
+                {
                     semaphore.Release(); // release one resource
                     buffer[i] = "";
-                     i= 4;
-                 }
-        }
+                    i = 4;
+                }
+            }
 
+        }
     }
 }

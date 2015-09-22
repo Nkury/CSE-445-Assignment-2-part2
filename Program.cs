@@ -12,15 +12,16 @@ namespace Assignment2
          public static AutoResetEvent orderCompleted = new AutoResetEvent(false); // when the airline is done processing the order, this event
                                                                           // coordinates with the travel agency so it can print the timestamp
          public static MultiCellBuffer bufferRef = new MultiCellBuffer(); // instantiate buffer that will hold the orders of travel agencies
+         public static confirmBuffer confirm = new confirmBuffer();
         static void Main(string[] args)
         {
-            
+            // change
             Airline air = new Airline(); // create an airline to pass the airline function for threading
             // change
             // Instantiate 3 airline threads and then start them
-            Thread airline1 = new Thread(new ThreadStart(air.priceModel));
-            Thread airline2 = new Thread(new ThreadStart(air.airlineFunc));
-            Thread airline3 = new Thread(new ThreadStart(air.airlineFunc));
+            Thread airline1 = new Thread(new ThreadStart(() => air.priceModel("airline1"))); // start the thread with the passed-in parameter airline1 string
+            Thread airline2 = new Thread(new ThreadStart(() => air.priceModel("airline2"))); // start the thread with the passed-in parameter airline2 string
+            Thread airline3 = new Thread(new ThreadStart(() => air.priceModel("airline3"))); // start the thread with the passed-in parameter airline3 string
             airline1.Name = "airline 1";
             airline2.Name = "airline 2";
             airline3.Name = "airline 3";
