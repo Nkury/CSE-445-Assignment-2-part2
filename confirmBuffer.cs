@@ -22,16 +22,16 @@ namespace Assignment2
 
         public void setCell(string name, double order)
         {
-            //lock (buffer)
-            //{
+            lock (buffer)
+            {
                 buffer.Add(new confirmObject(name, order));
-            //}
+            }
         }
 
         public double getCell(string name)
         {
-            //lock (buffer)
-            //{
+            lock (buffer)
+            {
                 for (int i = 0; i < buffer.Count; i++)
                 {
                     if (buffer[i].travelAgency == name)
@@ -40,10 +40,15 @@ namespace Assignment2
                          buffer.RemoveAt(i);
                          return temp;
                     }
-              //  }
+                }
             }
 
             return 0; // couldn't find the confirmation
+        }
+
+        public int getSize()
+        {
+            return buffer.Count;
         }
     }
 }

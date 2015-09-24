@@ -22,8 +22,10 @@ namespace Assignment2
         public void travelAgencyFunc()  // for starting thread
         {
             Airline air = new Airline(); // creates an airline object for checking the prices
-            for (Int32 i = 0; i < 20; i++) // loops 10 times to periodically check if there is a price cut
+            int count = 0;
+            do// loops 10 times to periodically check if there is a price cut
             {
+                Console.WriteLine("COUNT = " + count);
                 Thread.Sleep(1000); // wait for the confirm buffer to be released
                 int month = DateTime.Now.Month;
                 int day = DateTime.Now.Day;
@@ -34,21 +36,22 @@ namespace Assignment2
                 double orderTotal = 0;  // initializes it to zero in order to go through a loop and keep checking the confirmation buffer
                 // Monitor.Wait(Program.confirm); // wait for the confirm buffer to be released
                 while (orderTotal == 0)
-                 {
-                     Thread.Sleep(1000);
-                     Program.rwlock.AcquireReaderLock(Timeout.Infinite);
-                    try{
-                        Console.WriteLine("CHECK NAME: " + Thread.CurrentThread.Name);
-                        orderTotal = Program.confirm.getCell(Thread.CurrentThread.Name);
-                     }
-                    finally{
-                        Program.rwlock.ReleaseReaderLock();
-                    }
-                 } 
+                {
+                    Thread.Sleep(1000);
+                    // Program.rwlock.AcquireReaderLock(300);
+                    // try{
+                    Console.WriteLine("CHECK NAME: " + Thread.CurrentThread.Name);
+                    orderTotal = Program.confirm.getCell(Thread.CurrentThread.Name);
+                    //  }
+                    // finally{
+                    //     Program.rwlock.ReleaseReaderLock();
+                    // }
+                }
+                count++;
                 Console.WriteLine("Order processed for $" + orderTotal + " from " + Thread.CurrentThread.Name + ". Order finished processing at: " + month + "/" + day + "/" + year + " @ "
                   + hour + ":" + min + ":" + sec + " and took " + (DateTime.Now.Second - sec) + " seconds"); // print out the timestamp the order was finished processing
 
-            }
+            } while (count < 20);
         }
 
         // event handler that takes in the previous price and amount and the new price to calculate how many tickets should be bought
@@ -61,15 +64,15 @@ namespace Assignment2
                     airlineName, newAmt, newPrice); // create new orderObject
                 Console.WriteLine(Encoder.encrypt(newOrder));
                 string encryptedObject = Encoder.encrypt(newOrder);
-                Program.rwlock.AcquireWriterLock(Timeout.Infinite);
-                try
-                {
+               // Program.rwlock.AcquireWriterLock(300);
+                //try
+              //  {
                     Program.bufferRef.setOneCell(encryptedObject);
-                }
-                finally
-                {
-                    Program.rwlock.ReleaseWriterLock();
-                }
+               // }
+              //  finally
+              //  {
+               //     Program.rwlock.ReleaseWriterLock();
+               // }
             }
             // send the orderObject to Encoder for encryption and converting to string
             // Monitor.Wait(encryptedObject);   // wait for airline to finish processing the order before continuing
