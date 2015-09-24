@@ -18,11 +18,13 @@ namespace Assignment2
         {
             // change
             Airline air = new Airline(); // create an airline to pass the airline function for threading
-            
+            Airline air2 = new Airline();
+            Airline air3 = new Airline();
+
             // Instantiate 3 airline threads and then start them
             Thread airline1 = new Thread(new ThreadStart(() => air.priceModel("airline1"))); // start the thread with the passed-in parameter airline1 string
-            Thread airline2 = new Thread(new ThreadStart(() => air.priceModel("airline2"))); // start the thread with the passed-in parameter airline2 string
-            Thread airline3 = new Thread(new ThreadStart(() => air.priceModel("airline3"))); // start the thread with the passed-in parameter airline3 string
+            Thread airline2 = new Thread(new ThreadStart(() => air2.priceModel("airline2"))); // start the thread with the passed-in parameter airline2 string
+            Thread airline3 = new Thread(new ThreadStart(() => air3.priceModel("airline3"))); // start the thread with the passed-in parameter airline3 string
             airline1.Name = "airline 1";
             airline2.Name = "airline 2";
             airline3.Name = "airline 3";
@@ -44,6 +46,7 @@ namespace Assignment2
             }
 
             // create buffer classes, etc.
+            Console.WriteLine("I FINISHED TERMINATION ZZzzt");
 
         }
     }

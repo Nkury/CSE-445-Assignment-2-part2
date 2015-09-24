@@ -21,11 +21,8 @@ namespace Assignment2
   
         public void travelAgencyFunc()  // for starting thread
         {
-            Airline air = new Airline(); // creates an airline object for checking the prices
-            int count = 0;
-            do// loops 10 times to periodically check if there is a price cut
+            for(int i = 0; i < 20; i++)// loops 20 times to periodically check if there is a price cut (20 seconds)
             {
-                Console.WriteLine("COUNT = " + count);
                 Thread.Sleep(1000); // wait for the confirm buffer to be released
                 int month = DateTime.Now.Month;
                 int day = DateTime.Now.Day;
@@ -34,24 +31,28 @@ namespace Assignment2
                 int min = DateTime.Now.Minute;
                 int sec = DateTime.Now.Second;
                 double orderTotal = 0;  // initializes it to zero in order to go through a loop and keep checking the confirmation buffer
+                //int count = 0;
                 // Monitor.Wait(Program.confirm); // wait for the confirm buffer to be released
-                while (orderTotal == 0)
+                while (orderTotal == 0 && Program.confirm.getSize() > 0/* && count < 10*/)
                 {
                     Thread.Sleep(1000);
                     // Program.rwlock.AcquireReaderLock(300);
                     // try{
-                    Console.WriteLine("CHECK NAME: " + Thread.CurrentThread.Name);
+                    Console.WriteLine("CHECK NAME: " + Thread.CurrentThread.Name + " with a size of " + Program.confirm.getSize());
                     orderTotal = Program.confirm.getCell(Thread.CurrentThread.Name);
+                    //count++;
                     //  }
                     // finally{
                     //     Program.rwlock.ReleaseReaderLock();
                     // }
                 }
-                count++;
+
+                if(orderTotal != 0)
                 Console.WriteLine("Order processed for $" + orderTotal + " from " + Thread.CurrentThread.Name + ". Order finished processing at: " + month + "/" + day + "/" + year + " @ "
                   + hour + ":" + min + ":" + sec + " and took " + (DateTime.Now.Second - sec) + " seconds"); // print out the timestamp the order was finished processing
-
-            } while (count < 20);
+                Console.WriteLine(i);
+            }
+            Console.WriteLine("I'm free!");
         }
 
         // event handler that takes in the previous price and amount and the new price to calculate how many tickets should be bought
