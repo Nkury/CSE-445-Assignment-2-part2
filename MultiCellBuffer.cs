@@ -23,13 +23,14 @@ namespace Assignment2
         {
             // IF THERE IS AN ERROR, THEN IT HAS TO TO WITH THIS
 
-            semaphore.WaitOne(); // acquire one resource
-            lock (buffer)
-            {
+           semaphore.WaitOne(); // acquire one resource
+           lock (buffer)
+           {
                 for (int i = 0; i < 3; i++)
                 {
                     if (buffer[i] == "")
                     {
+                        Console.WriteLine("Set Cell " + i + " with " + order);
                         buffer[i] = order;
                         i = 4;
                     }

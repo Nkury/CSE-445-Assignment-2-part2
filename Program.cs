@@ -13,6 +13,7 @@ namespace Assignment2
                                                                           // coordinates with the travel agency so it can print the timestamp
          public static MultiCellBuffer bufferRef = new MultiCellBuffer(); // instantiate buffer that will hold the orders of travel agencies
          public static confirmBuffer confirm = new confirmBuffer();
+         public static ReaderWriterLock rwlock = new ReaderWriterLock();
         static void Main(string[] args)
         {
             // change
@@ -34,7 +35,7 @@ namespace Assignment2
             Airline.priceCut += new priceCutEvent(travel.ticketsOnSale);       // have the travel agency method subscribe to airline event
 
             Thread[] travelAgencies = new Thread[5]; // create 5 travel agency threads
-            for (int i = 0; i < 3; i++) // N = 5 (for five travel agency threads)
+            for (int i = 0; i <= 4; i++) // N = 5 (for five travel agency threads)
             {
                 // Start 5 travel agency threads
                 travelAgencies[i] = new Thread(new ThreadStart(travel.travelAgencyFunc));

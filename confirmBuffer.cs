@@ -36,13 +36,19 @@ namespace Assignment2
                 {
                     if (buffer[i].travelAgency == name)
                     {
-                        return buffer[i].orderTotal;
-                        buffer.RemoveAt(i);
+                        double temp = buffer[i].orderTotal;
+                         buffer.RemoveAt(i);
+                         return temp;
                     }
                 }
             }
 
             return 0; // couldn't find the confirmation
+        }
+
+        public int getSize()
+        {
+            return buffer.Count;
         }
     }
 }
