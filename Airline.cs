@@ -12,7 +12,6 @@ namespace Assignment2
        
        public class Airline
        {
-           //TEST!!
            static Random rng = new Random();
            public static event priceCutEvent priceCut;
            private static double ticketPrice = 900;
@@ -32,7 +31,9 @@ namespace Assignment2
                 if (newPrice < ticketPrice) //a price cut
                 { //a price cut
                     if (priceCut != null) {  //there is at least a subscriber
+                        Console.WriteLine("price cut for " + airlineName + " for " + newPrice);
                         priceCut(airlineName, prevAmt, prevPrice, newPrice);
+                       // Console.WriteLine("price cut for " + airlineName + " for " + newPrice);
                         numPriceCuts++;
                     }
 
@@ -41,23 +42,41 @@ namespace Assignment2
             }
            public void priceModel(string name)
             {
-                while(numPriceCuts < 20)
+                while (numPriceCuts < 20)
                 {
+                    Console.WriteLine("numPriceCuts= " + numPriceCuts);
                     Thread.Sleep(500);
+                   // Console.WriteLine(name + " is also here before");
                     //Take the order from the queue of the orders;
-                    string orderString = Program.bufferRef.getOneCell();
-                    OrderObject order = Decoder.decrypt(orderString);
-                    //Decide the price based on the orders
-                    if(name == order.getReceiverID()){
-                        amountOfTickets = order.getAmount();
-                        Thread orderProc = new Thread(new ThreadStart(() => op.orderFunc(order)));
-                        orderProc.Start();
-                        Program.bufferRef.eraseCell(Encoder.encrypt(order));
-                    } 
+                    string orderString = "";
+                    Program.rwlock.AcquireReaderLock(Timeout.Infinite);
+                    try
+                    {
+                        orderString = Program.bufferRef.getOneCell();
+                        if (orderString != "")
+                        {
+                            //Console.WriteLine("Im here2");
+                            OrderObject order = Decoder.decrypt(orderString);
+                            //Decide the price based on the orders
+                            if (name == order.getReceiverID())
+                            {
+                                amountOfTickets = order.getAmount();
+                                Thread orderProc = new Thread(new ThreadStart(() => op.orderFunc(order)));
+                                orderProc.Start();
+                                Program.bufferRef.eraseCell(Encoder.encrypt(order));
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        Program.rwlock.ReleaseReaderLock();
+                    }
+                  
 
-                    Int32 p = rng.Next(100, 900);
-                    //Console.WriteLine("New Price is {0}", p);
-                    Airline.changePrice(name, amountOfTickets, ticketPrice, p);
+                        Int32 p = rng.Next(100 + numPriceCuts, 900 + numPriceCuts);
+                        //Console.WriteLine("New Price is {0}", p);
+                        Airline.changePrice(name, amountOfTickets, ticketPrice, p);
+                    
                 }
             }
        }        

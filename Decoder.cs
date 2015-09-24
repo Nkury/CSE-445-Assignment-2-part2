@@ -10,6 +10,7 @@ namespace Assignment2
     {
         public static OrderObject decrypt(String s)
         {
+            Console.WriteLine(s);
             String[] items = s.Split('/');
             OrderObject order = new OrderObject(items[0], Convert.ToInt32(items[1]), items[2], 
                 Convert.ToInt32(items[3]), Convert.ToDouble(items[4]));

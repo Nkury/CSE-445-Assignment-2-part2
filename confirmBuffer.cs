@@ -22,24 +22,25 @@ namespace Assignment2
 
         public void setCell(string name, double order)
         {
-            lock (buffer)
-            {
+            //lock (buffer)
+            //{
                 buffer.Add(new confirmObject(name, order));
-            }
+            //}
         }
 
         public double getCell(string name)
         {
-            lock (buffer)
-            {
+            //lock (buffer)
+            //{
                 for (int i = 0; i < buffer.Count; i++)
                 {
                     if (buffer[i].travelAgency == name)
                     {
-                        return buffer[i].orderTotal;
-                        buffer.RemoveAt(i);
+                        double temp = buffer[i].orderTotal;
+                         buffer.RemoveAt(i);
+                         return temp;
                     }
-                }
+              //  }
             }
 
             return 0; // couldn't find the confirmation
