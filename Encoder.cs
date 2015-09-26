@@ -14,7 +14,6 @@ namespace Assignment2
 {
     public static class Encoder
     {
-
         // static method that can be called anywhere to encrypt the object into a string value
         public static string encrypt(OrderObject oo)
         {

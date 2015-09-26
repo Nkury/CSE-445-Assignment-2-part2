@@ -20,16 +20,7 @@ namespace Assignment2
             {
                 //card is valid, process order
                 double orderTotal = order.getUnitPrice() * order.getAmount() * .081; //(unit price * amount of tickets * sales tax) 
-                //Program.rwlock.AcquireWriterLock(300);
-               // try
-               // {
-                    Program.confirm.setCell(order.getSenderID(), order, orderTotal);   // place the confirmation in the confirmation buffer   
-               // }
-               // finally
-              //  {
-              //      Program.rwlock.ReleaseWriterLock();
-              //  }
-               // Monitor.PulseAll(Program.confirm);
+                Program.confirm.setCell(order.getSenderID(), order, orderTotal);   // place the confirmation in the confirmation buffer   
             }
         }
     }

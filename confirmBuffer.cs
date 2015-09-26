@@ -25,10 +25,7 @@ namespace Assignment2
 
         public void setCell(string name, OrderObject order, double orderTotal)
         {
-            //lock (buffer)
-           // {
-                buffer.Add(new confirmObject(name, order, orderTotal));
-           // }
+           buffer.Add(new confirmObject(name, order, orderTotal));
         }
 
         public confirmObject getCell(string name)

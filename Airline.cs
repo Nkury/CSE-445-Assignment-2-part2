@@ -14,9 +14,9 @@ namespace Assignment2
     {
         static Random rng = new Random();
         public static event priceCutEvent priceCut;
-        private /*static */ double ticketPrice = 900;
-        private /*static */ Int32 amountOfTickets = 100; // default starts at 100 tickets to purchase
-        public /*static */ Int32 numPriceCuts = 0; // counts how many price cut events occurs
+        private double ticketPrice = 900;
+        private Int32 amountOfTickets = 100; // default starts at 100 tickets to purchase
+        public Int32 numPriceCuts = 0; // counts how many price cut events occurs
         private OrderProcessing op = new OrderProcessing();
         public double getPrice()
         {
@@ -26,16 +26,15 @@ namespace Assignment2
         {
             return numPriceCuts;
         }
-        public /*static */ void changePrice(string airlineName, int prevAmt, double prevPrice, double newPrice)
+        public void changePrice(string airlineName, int prevAmt, double prevPrice, double newPrice)
         {
             if (newPrice < ticketPrice) //a price cut
             { //a price cut
                 if (priceCut != null)
                 {  //there is at least a subscriber
-                    //Console.WriteLine(airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
                     Program.semaphore.WaitOne();
+                    Console.WriteLine("--- " + airlineName + " initiated PRICE CUT #" + (numPriceCuts +1) + " from $" + prevPrice + " to $" + newPrice);
                     priceCut(airlineName, prevAmt, prevPrice, newPrice);
-                    //Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
                     numPriceCuts++;
                 }
 
@@ -47,38 +46,25 @@ namespace Assignment2
             while (numPriceCuts < 20)
             {
                 int tempNumCuts = numPriceCuts;
-                Thread.Sleep(4000);
+                Thread.Sleep(2000);
                 Int32 p = rng.Next(100 + numPriceCuts, 900 + numPriceCuts);
-                //Console.WriteLine("New Price is {0}", p);
                 changePrice(name, amountOfTickets, ticketPrice, p);
-                //Console.WriteLine("numPriceCuts= " + numPriceCuts + " for " + name);
-                //Thread.Sleep(2500);
-                // Console.WriteLine(name + " is also here before");
+            
                 //Take the order from the queue of the orders;
                 string orderString = "";
 
-                //Program.rwlock.AcquireReaderLock(300);
-              //  try
-              //  {
-              //      orderString = Program.bufferRef.getOneCell();
-               // }
-              //  finally
-              //  {
-               //     Program.rwlock.ReleaseReaderLock();
-               // }
                 if (tempNumCuts != numPriceCuts)
                 {
                     while (orderString == "")
                     {
                         orderString = Program.bufferRef.getOneCell();
                         OrderObject order = null;
-                        //Console.WriteLine("Im here2");
                         if (orderString != "")
                             order = Decoder.decrypt(orderString);
+
                         //Decide the price based on the orders
                         if (order != null && name == order.getReceiverID())
                         {
-                            //Program.semaphore.Release();
                             amountOfTickets = order.getAmount();
                             Thread orderProc = new Thread(new ThreadStart(() => op.orderFunc(order)));
                             orderProc.Start();
@@ -86,13 +72,9 @@ namespace Assignment2
                         }
                     }
                 }
-                /*
-                Thread.Sleep(4000);
-                Int32 p = rng.Next(100 + numPriceCuts, 900 + numPriceCuts);
-                //Console.WriteLine("New Price is {0}", p);
-                changePrice(name, amountOfTickets, ticketPrice, p); */
             }
 
+            Console.WriteLine("****************" + name + " HAS FINISHED ITS PRICE CUTS ****************");
         }
     }
 }

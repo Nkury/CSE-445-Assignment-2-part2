@@ -1,7 +1,7 @@
 ﻿// Programmer:  Nizar Kury
 // Instructor:  Professor Chen
 // Date:        9/14/2015
-// Description: A class that contains information of an order from an airline.
+// Description: A class that contains the sender ID, credit card number, receiver ID, amount, and unit price of an order from an airline.
 
 using System;
 using System.Collections.Generic;
@@ -89,6 +89,7 @@ namespace Assignment2
             unitPrice = newPrice;
         }
 
+        // generates a random credit card number between 5000 and 7000
         public static int generateRandomCreditCardNo(){
             return rng.Next(5000, 7000);
         }
