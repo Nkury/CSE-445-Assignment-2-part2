@@ -33,8 +33,9 @@ namespace Assignment2
                 if (priceCut != null)
                 {  //there is at least a subscriber
                     //Console.WriteLine(airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
+                    Program.semaphore.WaitOne();
                     priceCut(airlineName, prevAmt, prevPrice, newPrice);
-                    Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
+                    //Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
                     numPriceCuts++;
                 }
 
@@ -45,8 +46,13 @@ namespace Assignment2
         {
             while (numPriceCuts < 20)
             {
+                int tempNumCuts = numPriceCuts;
+                Thread.Sleep(4000);
+                Int32 p = rng.Next(100 + numPriceCuts, 900 + numPriceCuts);
+                //Console.WriteLine("New Price is {0}", p);
+                changePrice(name, amountOfTickets, ticketPrice, p);
                 //Console.WriteLine("numPriceCuts= " + numPriceCuts + " for " + name);
-                Thread.Sleep(1500);
+                //Thread.Sleep(2500);
                 // Console.WriteLine(name + " is also here before");
                 //Take the order from the queue of the orders;
                 string orderString = "";
@@ -54,30 +60,37 @@ namespace Assignment2
                 //Program.rwlock.AcquireReaderLock(300);
               //  try
               //  {
-                    orderString = Program.bufferRef.getOneCell();
+              //      orderString = Program.bufferRef.getOneCell();
                // }
               //  finally
               //  {
                //     Program.rwlock.ReleaseReaderLock();
                // }
-
-                if (orderString != "")
+                if (tempNumCuts != numPriceCuts)
                 {
-                    //Console.WriteLine("Im here2");
-                    OrderObject order = Decoder.decrypt(orderString);
-                    //Decide the price based on the orders
-                    if (name == order.getReceiverID())
+                    while (orderString == "")
                     {
-                        amountOfTickets = order.getAmount();
-                        Thread orderProc = new Thread(new ThreadStart(() => op.orderFunc(order)));
-                        orderProc.Start();
-                        Program.bufferRef.eraseCell(Encoder.encrypt(order));
+                        orderString = Program.bufferRef.getOneCell();
+                        OrderObject order = null;
+                        //Console.WriteLine("Im here2");
+                        if (orderString != "")
+                            order = Decoder.decrypt(orderString);
+                        //Decide the price based on the orders
+                        if (order != null && name == order.getReceiverID())
+                        {
+                            //Program.semaphore.Release();
+                            amountOfTickets = order.getAmount();
+                            Thread orderProc = new Thread(new ThreadStart(() => op.orderFunc(order)));
+                            orderProc.Start();
+                            Program.bufferRef.eraseCell(Encoder.encrypt(order));
+                        }
                     }
                 }
-
+                /*
+                Thread.Sleep(4000);
                 Int32 p = rng.Next(100 + numPriceCuts, 900 + numPriceCuts);
                 //Console.WriteLine("New Price is {0}", p);
-                changePrice(name, amountOfTickets, ticketPrice, p);
+                changePrice(name, amountOfTickets, ticketPrice, p); */
             }
 
         }

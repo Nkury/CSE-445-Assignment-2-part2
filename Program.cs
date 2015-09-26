@@ -13,9 +13,11 @@ namespace Assignment2
                                                                           // coordinates with the travel agency so it can print the timestamp
          public static MultiCellBuffer bufferRef = new MultiCellBuffer(); // instantiate buffer that will hold the orders of travel agencies
          public static confirmBuffer confirm = new confirmBuffer();
+         public static Semaphore semaphore = new Semaphore(0, 3);   // semaphore for keeping track of how many cells are open
          public static ReaderWriterLock rwlock = new ReaderWriterLock();
         static void Main(string[] args)
         {
+            Program.semaphore.Release(3);
             // change
             Airline air = new Airline(); // create an airline to pass the airline function for threading
             Airline air2 = new Airline();

@@ -21,7 +21,7 @@ namespace Assignment2
   
         public void travelAgencyFunc()  // for starting thread
         {
-            for(int i = 0; i < 20; i++)// loops 20 times to periodically check if there is a price cut (20 seconds)
+            for(int i = 0; i < 200; i++) // loops 200 times to periodically check if there is a price cut 
             {
                 Thread.Sleep(800); // wait for the confirm buffer to be released
                 int month = DateTime.Now.Month;
@@ -34,7 +34,7 @@ namespace Assignment2
                 confirmObject cOrder = null;  // initializes it to zero in order to go through a loop and keep checking the confirmation buffer
                 //int count = 0;
                 // Monitor.Wait(Program.confirm); // wait for the confirm buffer to be released
-                while (cOrder == null&& Program.confirm.getSize() > 0/* && count < 10*/)
+                while (cOrder == null && Program.confirm.getSize() > 0/* && count < 10*/)
                 {
                     Thread.Sleep(1000);
                     // Program.rwlock.AcquireReaderLock(300);
@@ -60,7 +60,7 @@ namespace Assignment2
         // event handler that takes in the previous price and amount and the new price to calculate how many tickets should be bought
         public void ticketsOnSale(string airlineName, int prevAmt, double prevPrice, double newPrice)  // event handler
         {
-            //Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
+            Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
             int newAmt = (int)(prevPrice * 100 / newPrice); // calculate new amount by taking the cost of the order previously multiplied with
                                                                 // the default amount of tickets and divide it by the new price
                 Int32 travelNum = rdm.Next(1, 6);
