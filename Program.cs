@@ -45,9 +45,6 @@ namespace Assignment2
                 travelAgencies[i].Start();
             }
 
-            // create buffer classes, etc.
-            Console.WriteLine("I FINISHED TERMINATION ZZzzt");
-
         }
     }
 }

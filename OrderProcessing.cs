@@ -23,7 +23,7 @@ namespace Assignment2
                 //Program.rwlock.AcquireWriterLock(300);
                // try
                // {
-                    Program.confirm.setCell(order.getSenderID(), orderTotal);   // place the confirmation in the confirmation buffer   
+                    Program.confirm.setCell(order.getSenderID(), order, orderTotal);   // place the confirmation in the confirmation buffer   
                // }
                // finally
               //  {

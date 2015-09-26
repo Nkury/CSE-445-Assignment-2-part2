@@ -30,7 +30,7 @@ namespace Assignment2
                 {
                     if (buffer[i] == "")
                     {
-                        Console.WriteLine("Set Cell " + i + " with " + order);
+                        //Console.WriteLine("Set Cell " + i + " with " + order);
                         buffer[i] = order;
                         i = 4;
                     }
@@ -58,16 +58,19 @@ namespace Assignment2
 
         public void eraseCell(string order)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                if (buffer[i] == order)
+            //lock (buffer)
+           // {
+                for (int i = 0; i < 3; i++)
                 {
-                    semaphore.Release(); // release one resource
-                    buffer[i] = "";
-                    i = 4;
+                    if (buffer[i] == order)
+                    {
+                        semaphore.Release(); // release one resource
+                        buffer[i] = "";
+                        i = 4;
+                    }
                 }
-            }
-
+          //  }
+        
         }
     }
 }

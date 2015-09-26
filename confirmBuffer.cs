@@ -8,11 +8,14 @@ namespace Assignment2
 {
     public class confirmObject{
         public string travelAgency;
+        public OrderObject order;
         public double orderTotal;
-        public confirmObject(string n, double o)
+
+        public confirmObject(string n, OrderObject o, double ot)
         {
             travelAgency = n;
-            orderTotal = o;
+            order = o;
+            orderTotal = ot;
         }
     }
 
@@ -20,15 +23,15 @@ namespace Assignment2
     {
         private List<confirmObject> buffer = new List<confirmObject>();
 
-        public void setCell(string name, double order)
+        public void setCell(string name, OrderObject order, double orderTotal)
         {
             lock (buffer)
             {
-                buffer.Add(new confirmObject(name, order));
+                buffer.Add(new confirmObject(name, order, orderTotal));
             }
         }
 
-        public double getCell(string name)
+        public confirmObject getCell(string name)
         {
             lock (buffer)
             {
@@ -36,14 +39,14 @@ namespace Assignment2
                 {
                     if (buffer[i].travelAgency == name)
                     {
-                        double temp = buffer[i].orderTotal;
+                         confirmObject temp = buffer[i];
                          buffer.RemoveAt(i);
                          return temp;
                     }
                 }
             }
 
-            return 0; // couldn't find the confirmation
+            return null; // couldn't find the confirmation
         }
 
         public int getSize()

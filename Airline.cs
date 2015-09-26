@@ -15,7 +15,7 @@ namespace Assignment2
         static Random rng = new Random();
         public static event priceCutEvent priceCut;
         private /*static */ double ticketPrice = 900;
-        private /*static */ Int32 amountOfTickets = 1000; // default starts at 1000 tickets to purchase
+        private /*static */ Int32 amountOfTickets = 100; // default starts at 100 tickets to purchase
         public /*static */ Int32 numPriceCuts = 0; // counts how many price cut events occurs
         private OrderProcessing op = new OrderProcessing();
         public double getPrice()
@@ -32,9 +32,9 @@ namespace Assignment2
             { //a price cut
                 if (priceCut != null)
                 {  //there is at least a subscriber
-                    Console.WriteLine("price cut for " + airlineName + " for " + newPrice);
+                    //Console.WriteLine(airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
                     priceCut(airlineName, prevAmt, prevPrice, newPrice);
-                    // Console.WriteLine("price cut for " + airlineName + " for " + newPrice);
+                    Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
                     numPriceCuts++;
                 }
 
@@ -45,8 +45,8 @@ namespace Assignment2
         {
             while (numPriceCuts < 20)
             {
-                Console.WriteLine("numPriceCuts= " + numPriceCuts + " for " + name);
-                Thread.Sleep(500);
+                //Console.WriteLine("numPriceCuts= " + numPriceCuts + " for " + name);
+                Thread.Sleep(1500);
                 // Console.WriteLine(name + " is also here before");
                 //Take the order from the queue of the orders;
                 string orderString = "";
