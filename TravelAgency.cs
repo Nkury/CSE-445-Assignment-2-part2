@@ -23,7 +23,7 @@ namespace Assignment2
         {
             for(int i = 0; i < 20; i++)// loops 20 times to periodically check if there is a price cut (20 seconds)
             {
-                Thread.Sleep(500); // wait for the confirm buffer to be released
+                Thread.Sleep(800); // wait for the confirm buffer to be released
                 int month = DateTime.Now.Month;
                 int day = DateTime.Now.Day;
                 int year = DateTime.Now.Year;
@@ -60,7 +60,7 @@ namespace Assignment2
         // event handler that takes in the previous price and amount and the new price to calculate how many tickets should be bought
         public void ticketsOnSale(string airlineName, int prevAmt, double prevPrice, double newPrice)  // event handler
         {
-            //Console.WriteLine(airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
+            //Console.WriteLine("--- " + airlineName + " initiated a PRICE CUT from $" + prevPrice + " to $" + newPrice);
             int newAmt = (int)(prevPrice * 100 / newPrice); // calculate new amount by taking the cost of the order previously multiplied with
                                                                 // the default amount of tickets and divide it by the new price
                 Int32 travelNum = rdm.Next(1, 6);

@@ -59,7 +59,7 @@ namespace Assignment2
         public void eraseCell(string order)
         {
             //lock (buffer)
-           // {
+            //{
                 for (int i = 0; i < 3; i++)
                 {
                     if (buffer[i] == order)
@@ -69,7 +69,7 @@ namespace Assignment2
                         i = 4;
                     }
                 }
-          //  }
+           // }
         
         }
     }
